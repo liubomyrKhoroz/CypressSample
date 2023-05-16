@@ -1,4 +1,4 @@
-FROM cypress/base:16.13.0
+FROM cypress/base:12
 
 COPY ./cypress ./cypress
 COPY ./cypress.config.js ./cypress.config.js
