@@ -1,11 +1,11 @@
 pipeline{
     agent{
         docker{
-            image 'cypress/base:12'
+        image 'cypress/base:12'
 	    args '-u root:root'
         }
     }
-}
+
 stages{
     stage('Download the dependencies'){
         steps{
@@ -18,4 +18,5 @@ stages{
             sh "npm run build:and:test"
         }
     }
+}
 }
