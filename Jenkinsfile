@@ -5,9 +5,6 @@ pipeline{
         choice(name: 'BROWSER', choices: ['chrome','edge','firefox'], description:"Select the browser")
     }
     stages{
-        stage{
-        echo "Building the application"
-        }
         stage('Testing'){
             steps{
             bat "npm i"
