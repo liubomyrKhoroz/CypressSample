@@ -11,8 +11,6 @@ pipeline{
             bat "npx cypress run --browser ${BROWSER}"
             }
         }
-        stage('Deploying'){
-            echo "Deploy the application"
-        }
+
     }
     }
