@@ -6,6 +6,7 @@ COPY ./package-lock.json ./package-lock.json
 COPY ./package.json ./package.json
 
 RUN npm install
-RUN npm run build:and:test
+
+ENTRYPOINT ["npx","cypress","run"]
 
 
