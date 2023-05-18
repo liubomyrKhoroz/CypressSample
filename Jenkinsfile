@@ -14,12 +14,13 @@ pipeline{
             }
         
         }
-        stage('Results') {
-            steps{
-            junit '**/target/surefire-reports/TEST-*.xml'
-            archiveArtifacts 'target/*.jar'
-            }
-        
+       
     }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'cypress/**/*.jar', fingerprint: true
+            junit 'cypress/reports/**/*.xml'
+        }
     }
 }
