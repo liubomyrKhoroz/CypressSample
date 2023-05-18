@@ -20,7 +20,7 @@ pipeline{
   post {
     always {
       junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
-      archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
+      archiveArtifacts artifacts: 'cypress/videos/**/*.avi', onlyIfSuccessful: false
     }
     }
 }
