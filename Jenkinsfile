@@ -12,6 +12,14 @@ pipeline{
             bat "npm i"
             bat "npx cypress run"
             }
+        
         }
+        stage('Results') {
+            steps{
+            junit '**/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts 'target/*.jar'
+            }
+        
+    }
     }
 }
