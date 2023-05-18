@@ -3,6 +3,7 @@ pipeline{
 
     parameters{
         choice(name: 'BROWSER', choices: ['chrome','edge','firefox'], description:"Select the browser")
+        string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the test scenarios you want to run")
     }
     stages{
         stage('Testing'){
@@ -11,6 +12,5 @@ pipeline{
             bat "npx cypress run"
             }
         }
-
     }
-    }
+}
