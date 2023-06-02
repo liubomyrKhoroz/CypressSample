@@ -3,7 +3,8 @@ pipeline{
 
     parameters{
         choice(name: 'BROWSER', choices: ['chrome','edge','firefox'], description:"Select the browser")
-        choice(name: 'SPEC', choices:['cypress/e2e/**/**','cypress/e2e/1-getting-started','cypress/e2e/2-advanced-examples'], description: "Enter the test scenarios you want to runn")
+        choice(name: 'Test Scenario', choices:['cypress/e2e/','cypress/e2e/TestVerificationPage','cypress/e2e/TestWelcomePage'], description: "Enter the test scenarios you want to runn")
+        
     }
 
     stages{
