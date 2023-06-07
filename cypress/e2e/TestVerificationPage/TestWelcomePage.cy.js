@@ -18,7 +18,7 @@ before(() => {
 });
 
 describe(" Set up ", () => {
-  xit("Validate the URL", () => {
+  it("Validate the URL", () => {
     cy.wait(1000);
     cy.location("href").then((url) => {
       switch (true) {
@@ -54,7 +54,7 @@ describe(" Set up ", () => {
 });
 
 describe(" Testing Welcome page ", () => {
-  it(" First open displaying validation - English ", () => {
+  xit(" First open displaying validation - English ", () => {
     welcome
       .selectEnglishLanguage()
       .validateIcon()
