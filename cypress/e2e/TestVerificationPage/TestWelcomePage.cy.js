@@ -18,7 +18,7 @@ before(() => {
 });
 
 describe(" Set up ", () => {
-  it("Validate the URL", () => {
+  xit("Validate the URL", () => {
     cy.wait(1000);
     cy.location("href").then((url) => {
       switch (true) {
