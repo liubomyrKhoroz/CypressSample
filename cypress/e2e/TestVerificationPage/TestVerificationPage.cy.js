@@ -1,6 +1,6 @@
-import State from "../support/state/State";
-import WelcomePage from "../support/commands/WelcomePage";
-import VerificationPage from "../support/commands/VereficationPage";
+import State from "../../support/state/State";
+import WelcomePage from "../../support/commands/WelcomePage";
+import VerificationPage from "../../support/commands/VereficationPage";
 
 const state = new State();
 let welcome = new WelcomePage();

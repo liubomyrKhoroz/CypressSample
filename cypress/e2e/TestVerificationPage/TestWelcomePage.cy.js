@@ -1,14 +1,14 @@
-import State from "../support/state/State";
-import WelcomePage from "../support/commands/WelcomePage";
-import WelcomePageAdvinow from "../support/commands/Advinow/WelcomePageAdvinow";
-import WelcomePageAfyaBrain from "../support/commands/AfyaSasa/WelcomePageAfyaBrain";
-import WelcomePageAfyaCardiac from "../support/commands/AfyaSasa/WelcomePageAfyaCardiac";
-import WelcomePageBarrow from "../support/commands/Barrow/WelcomePageBarrow";
-import WelcomePageMoremd from "../support/commands/MoreMD/WelcomePageMoremd";
-import WelcomePageSonospine from "../support/commands/SonoSpine/WelcomePageSonospine";
-import data from "../support/state/data";
-import { setBusiness } from "../support/state/data";
-import testdata from "../support/state/testdata";
+import State from "../../support/state/State";
+import WelcomePage from "../../support/commands/WelcomePage";
+import WelcomePageAdvinow from "../../support/commands/Advinow/WelcomePageAdvinow";
+import WelcomePageAfyaBrain from "../../support/commands/AfyaSasa/WelcomePageAfyaBrain";
+import WelcomePageAfyaCardiac from "../../support/commands/AfyaSasa/WelcomePageAfyaCardiac";
+import WelcomePageBarrow from "../../support/commands/Barrow/WelcomePageBarrow";
+import WelcomePageMoremd from "../../support/commands/MoreMD/WelcomePageMoremd";
+import WelcomePageSonospine from "../../support/commands/SonoSpine/WelcomePageSonospine";
+import data from "../../support/state/data";
+import { setBusiness } from "../../support/state/data";
+import testdata from "../../support/state/testdata";
 
 const state = new State();
 let welcome = new WelcomePage();
