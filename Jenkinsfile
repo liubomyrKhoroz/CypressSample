@@ -8,10 +8,15 @@ pipeline{
     }
 
     stages{
+        stage('Pre'){
+          steps{
+            sh 'env|sort'
+          }
+        }
         stage('Testing'){
             steps{
             bat "npm i"
-            bat "npx cypress run --browser ${BROWSER} --spec ${TESTSUITE} --url ${ENVIRONMENT}"
+            bat "npx cypress run --browser ${BROWSER} --spec ${TESTSUITE}"
             }
         }
        
@@ -21,7 +26,6 @@ pipeline{
     always {
       junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-      archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', onlyIfSuccessful: false
     }
     }
 }
