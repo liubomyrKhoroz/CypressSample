@@ -22,7 +22,6 @@ pipeline{
       junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
       rchiveArtifacts artifacts: 'cypress/screenshots/**/*.png', onlyIfSuccessful: false
-      archiveArtifacts artifacts: 'cypress/artifacts/**/*', followSymlinks: false
     }
     }
 }
