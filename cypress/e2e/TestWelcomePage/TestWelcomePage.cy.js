@@ -54,7 +54,7 @@ describe(" Set up ", () => {
 });
 
 describe(" Testing Welcome page ", () => {
-  xit(" First open displaying validation - English ", () => {
+  /*xit(" First open displaying validation - English ", () => {
     welcome
       .selectEnglishLanguage()
       .validateIcon()
@@ -116,7 +116,7 @@ describe(" Testing Welcome page ", () => {
       .verifyTermsNotChecked()
       .validateButtonSubmit(data.button_submit_en);
   });
-
+*/
   it(" Language section", () => {
     welcome
       .selectEnglishLanguage()
