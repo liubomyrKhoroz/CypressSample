@@ -8,15 +8,11 @@ pipeline{
     }
 
     stages{
-        stage('Pre'){
-          steps{
-            sh 'env|sort'
-          }
-        }
+
         stage('Testing'){
             steps{
             bat "npm i"
-            bat "npx cypress run --browser ${BROWSER} --spec ${TESTSUITE}"
+            bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} "
             }
         }
        
