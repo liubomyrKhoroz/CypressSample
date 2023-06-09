@@ -1,5 +1,3 @@
-@Library('jenkins-shared-library') _
-
 pipeline {
     agent any
 
@@ -9,11 +7,15 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749', 'https://patient.staging.advinow.ai/PatientApp/business=757', 'https://patient.staging.advinow.ai/PatientApp/business=301'], description: "Select the desired environment")
     }
 
+    environment {
+      MY_APP_URL = parameters.ENVIRONMENT
+    }
+
     stages {
         stage('Testing') {
             steps {
                 bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env url=${ENVIRONMENT}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env url=${MY_APP_URL}"
             }
         }
     }
