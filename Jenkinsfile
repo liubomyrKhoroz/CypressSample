@@ -10,8 +10,29 @@ pipeline {
     stages {
         stage('Testing') {
             steps {
+                script {
+                    def selectedEnv = ''
+                    switch (params.ENVIRONMENT) {
+                        case 'https://patient.staging.advinow.ai/PatientApp/business=754':
+                            selectedEnv = 'ENV_754'
+                            break
+                        case 'https://patient.staging.advinow.ai/PatientApp/business=750':
+                            selectedEnv = 'ENV_750'
+                            break
+                        case 'https://patient.staging.advinow.ai/PatientApp/business=749':
+                            selectedEnv = 'ENV_749'
+                            break
+                        case 'https://patient.staging.advinow.ai/PatientApp/business=757':
+                            selectedEnv = 'ENV_757'
+                            break
+                        case 'https://patient.staging.advinow.ai/PatientApp/business=301':
+                            selectedEnv = 'ENV_301'
+                            break
+                    }
+                    echo "Selected Environment: ${selectedEnv}"
+                }
                 bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env environment=${ENVIRONMENT}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE}"
             }
         }
     }
