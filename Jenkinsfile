@@ -1,27 +1,37 @@
-pipeline{
+pipeline {
     agent any
 
-    parameters{
-        choice(name: 'BROWSER', choices: ['chrome','edge','firefox'], description:"Select the browser")
-        choice(name: 'TESTSUITE', choices:['cypress/e2e/','cypress/e2e/TestVerificationPage/','cypress/e2e/TestWelcomePage/'], description: "Enter the test scenarios you want to runn")
-        choice(name: 'ENVIRONMENT', choices:['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749','https://patient.staging.advinow.ai/PatientApp/business=757','https://patient.staging.advinow.ai/PatientApp/business=301'], description:"Select needed environment")
+    parameters {
+        choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
+        choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/'], description: "Enter the test scenarios you want to run")
+        choice(name: 'ENVIRONMENT', choices: ['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749', 'https://patient.staging.advinow.ai/PatientApp/business=757', 'https://patient.staging.advinow.ai/PatientApp/business=301'], description: "Select the desired environment")
     }
 
-    stages{
-
-        stage('Testing'){
-            steps{
-            bat "npm i"
-            bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} "
+    stages {
+        stage('Testing') {
+            steps {
+                bat "npm i"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} "
             }
         }
-       
     }
 
-  post {
-    always {
-      junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
-      archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-    }
+    post {
+        always {
+            junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
+            archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
+        }
+
+        failure {
+            script {
+                def screenshotDir = "cypress/screenshots"
+                def failureScreenshots = findFiles(glob: "${screenshotDir}/*.png")
+                if (!failureScreenshots.empty) {
+                    step([$class: 'JUnitResultArchiver', testResults: 'test-results/*.xml'])
+                    archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
+                    archiveArtifacts artifacts: "${screenshotDir}/*.png", onlyIfSuccessful: false
+                }
+            }
+        }
     }
 }
