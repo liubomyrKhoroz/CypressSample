@@ -11,7 +11,7 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env url=${ENVIRONMENT}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${ENVIRONMENT}"
             }
         }
     }
