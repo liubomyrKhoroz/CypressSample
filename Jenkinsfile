@@ -21,17 +21,8 @@ pipeline {
             junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
             archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
         }
-
         failure {
-            script {
-                def screenshotDir = "cypress/screenshots"
-                def failureScreenshots = findFiles(glob: "${screenshotDir}/*.png")
-                if (!failureScreenshots.empty) {
-                    step([$class: 'JUnitResultArchiver', testResults: 'test-results/*.xml'])
-                    archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-                    archiveArtifacts artifacts: "${screenshotDir}/*.png", onlyIfSuccessful: false
-                }
-            }
+             archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
         }
     }
 }
