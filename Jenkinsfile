@@ -11,10 +11,7 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm i"
-                script {
-                    env.URL = "${params.ENVIRONMENT}"
-                }
-                bat "npx cypress run --browser ${params.BROWSER} --headed --spec ${params.TESTSUITE} --env environment=${env.URL}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env url=${ENVIRONMENT}"
             }
         }
     }
