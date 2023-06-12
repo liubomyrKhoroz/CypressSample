@@ -37,7 +37,7 @@ pipeline {
 def getDropdownChoices() {
     // Define the options and their corresponding names
     def options = ['Option 11', 'Option 12', 'Option 13', 'Option 14']
-    def optionNames = ['Option 1': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['Option 1': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the list of options
     return options
