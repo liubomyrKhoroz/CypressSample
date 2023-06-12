@@ -1,21 +1,3 @@
-def getDropdownChoices() {
-    // Define the options and their corresponding names
-    def options = ['https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2', 'Option 3', 'Option 4']
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the list of options
-    return options
-}
-
-// Define the function to get the option name based on the selected value
-def getOptionName(selectedOption) {
-    // Retrieve the option names mapping
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the name corresponding to the selected option
-    return optionNames[selectedOption]
-}
-
 pipeline {
     agent any
 
@@ -35,6 +17,10 @@ pipeline {
     stages {
         stage('Testing') {
             steps {
+              script{
+                    def selectedOption = params.OPTION
+                    def selectedOptionName = getOptionName(selectedOption)
+              }
                 bat "npm i"
                 bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${params.NAME}"
                 echo "Selected option: ${params.OPTION}"
@@ -54,3 +40,21 @@ pipeline {
     }
 }
 
+// Define the function to get the dropdown choices
+def getDropdownChoices() {
+    // Define the options and their corresponding names
+    def options = ['https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2', 'Option 3', 'Option 4']
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    
+    // Return the list of options
+    return options
+}
+
+// Define the function to get the option name based on the selected value
+def getOptionName(selectedOption) {
+    // Retrieve the option names mapping
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    
+    // Return the name corresponding to the selected option
+    return optionNames[selectedOption]
+}
