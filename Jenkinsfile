@@ -37,7 +37,7 @@ pipeline {
 def getDropdownChoices() {
     // Define the options and their corresponding names
     def options = ['Option 11', 'Option 12', 'Option 13', 'Option 14']
-    def optionNames = ['Option 1': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Option 11', 'https://patient.staging.advinow.ai/PatientApp/business=750': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the list of options
     return options
@@ -46,7 +46,7 @@ def getDropdownChoices() {
 // Define the function to get the option name based on the selected value
 def getOptionName(selectedOption) {
     // Retrieve the option names mapping
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['Option 1': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the name corresponding to the selected option
     return optionNames[selectedOption]
