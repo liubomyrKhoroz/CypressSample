@@ -5,7 +5,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
         choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/'], description: "Enter the test scenarios you want to run")
         
-        choice(name: 'ENVIRONMENT', choices: ['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749', 'https://patient.staging.advinow.ai/PatientApp/business=757', 'https://patient.staging.advinow.ai/PatientApp/business=301'], description: "Select the desired environment")
+        //choice(name: 'ENVIRONMENT', choices: ['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749', 'https://patient.staging.advinow.ai/PatientApp/business=757', 'https://patient.staging.advinow.ai/PatientApp/business=301'], description: "Select the desired environment")
          choice(
             choices: getDropdownChoices(),
             description: 'Select an option',
@@ -36,7 +36,7 @@ pipeline {
 
 def getDropdownChoices() {
     // Define the options and their corresponding names
-    def options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
+    def options = ['Option 11', 'Option 12', 'Option 13', 'Option 14']
     def optionNames = ['Option 1': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the list of options
