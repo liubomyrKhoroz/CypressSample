@@ -1,3 +1,21 @@
+def getDropdownChoices() {
+    // Define the options and their corresponding names
+    def options = ['https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2', 'Option 3', 'Option 4']
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    
+    // Return the list of options
+    return options
+}
+
+// Define the function to get the option name based on the selected value
+def getOptionName(selectedOption) {
+    // Retrieve the option names mapping
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    
+    // Return the name corresponding to the selected option
+    return optionNames[selectedOption]
+}
+
 pipeline {
     agent any
 
@@ -36,20 +54,3 @@ pipeline {
     }
 }
 
-def getDropdownChoices() {
-    // Define the options and their corresponding names
-    def options = ['Stage', 'Option 2', 'Option 3', 'Option 4']
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the list of options
-    return options
-}
-
-// Define the function to get the option name based on the selected value
-def getOptionName(selectedOption) {
-    // Retrieve the option names mapping
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Stage', 'Stage': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the name corresponding to the selected option
-    return optionNames[selectedOption]
-}
