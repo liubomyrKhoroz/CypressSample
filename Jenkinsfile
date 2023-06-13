@@ -4,12 +4,10 @@ pipeline {
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
         choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/'], description: "Enter the test scenarios you want to run")
-        
-        //choice(name: 'ENVIRONMENT', choices: ['https://patient.staging.advinow.ai/PatientApp/business=754', 'https://patient.staging.advinow.ai/PatientApp/business=750', 'https://patient.staging.advinow.ai/PatientApp/business=749', 'https://patient.staging.advinow.ai/PatientApp/business=757', 'https://patient.staging.advinow.ai/PatientApp/business=301'], description: "Select the desired environment")
          choice(
             choices: getDropdownChoices(),
             description: 'Select an option',
-            name: 'OPTION'
+            name: 'ENVIRONMENT'
         )
  
     }
@@ -37,21 +35,14 @@ pipeline {
     }
 }
 
-// Define the function to get the dropdown choices
 def getDropdownChoices() {
-    // Define the options and their corresponding names
-    def options = ['MoreMD staging', 'Option 2', 'Option 3', 'Option 4']
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the list of options
+
+    def options = ['MoreMD staging', 'Afya Sasa Cardiac staging', 'Option 3', 'Option 4']
+    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     return options
 }
 
-// Define the function to get the option name based on the selected value
 def getOptionName(selectedOption) {
-    // Retrieve the option names mapping
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
-    
-    // Return the name corresponding to the selected option
+    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     return optionNames[selectedOption]
 }
