@@ -16,9 +16,9 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${getOptionName(params.OPTION)}"
-                echo "Selected option: ${params.OPTION}"
-                echo "Selected option name: ${getOptionName(params.OPTION)}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${getOptionName(params.ENVIRONMENT)}"
+                echo "Selected option: ${params.ENVIRONMENT}"
+                echo "Selected option name: ${getOptionName(params.ENVIRONMENT)}"
               }
             }
         }
