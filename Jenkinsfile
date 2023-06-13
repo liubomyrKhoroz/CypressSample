@@ -21,11 +21,12 @@ pipeline {
                     def selectedOption = params.OPTION
                     def selectedOptionName = getOptionName(selectedOption)
                     echo "Selected option: ${selectedOptionName}"
-              
+              if (selectedOptionName == 'MoreMD staging') {
                 bat "npm i"
                 bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${params.OPTION}"
                 echo "Selected option: ${params.OPTION}"
                 echo "Selected option name: ${getOptionName(params.OPTION)}"
+              }
               }
             }
         }
@@ -46,7 +47,7 @@ pipeline {
 def getDropdownChoices() {
     // Define the options and their corresponding names
     def options = ['https://patient.staging.advinow.ai/PatientApp/business=754', 'Option 2', 'Option 3', 'Option 4']
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'MoreMD staging', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the list of options
     return options
@@ -55,7 +56,7 @@ def getDropdownChoices() {
 // Define the function to get the option name based on the selected value
 def getOptionName(selectedOption) {
     // Retrieve the option names mapping
-    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'Name 1', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['https://patient.staging.advinow.ai/PatientApp/business=754': 'MoreMD staging', 'Option 2': 'Name 2', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
     
     // Return the name corresponding to the selected option
     return optionNames[selectedOption]
