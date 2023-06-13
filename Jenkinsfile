@@ -37,12 +37,12 @@ pipeline {
 
 def getDropdownChoices() {
 
-    def options = ['MoreMD staging', 'Afya Sasa Cardiac staging', 'Option 3', 'Option 4']
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def options = ['MoreMD staging', 'Afya Sasa Cardiac staging', 'Sonospine staging', 'Advinow staging', 'Barrow staging','Afya Sasa Brain staging']
+    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging':'https://patient.staging.advinow.ai/PatientApp/business=684','Afya Sasa Brain staging':'https://patient.staging.advinow.ai/PatientApp/business=757']
     return options
 }
 
 def getOptionName(selectedOption) {
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Option 3': 'Name 3', 'Option 4': 'Name 4']
+    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging':'https://patient.staging.advinow.ai/PatientApp/business=684', 'Afya Sasa Brain staging':'https://patient.staging.advinow.ai/PatientApp/business=757']
     return optionNames[selectedOption]
 }
