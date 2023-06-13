@@ -20,11 +20,13 @@ pipeline {
               script{
                     def selectedOption = params.OPTION
                     def selectedOptionName = getOptionName(selectedOption)
-              }
+                    echo "Selected option: ${selectedOptionName}"
+              
                 bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${params.NAME}"
+                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${params.OPTION}"
                 echo "Selected option: ${params.OPTION}"
                 echo "Selected option name: ${getOptionName(params.OPTION)}"
+              }
             }
         }
     }
