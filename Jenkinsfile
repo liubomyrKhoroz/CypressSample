@@ -24,7 +24,7 @@ pipeline {
               }
             }
         }
-  }
+  
 
     post {
         always {
@@ -35,7 +35,7 @@ pipeline {
              archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
         }
     }
-
+}
 
 // Define the function to get the dropdown choices
 def getDropdownChoices() {
