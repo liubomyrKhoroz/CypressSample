@@ -17,17 +17,17 @@ pipeline {
     stages {
         stage('Testing') {
             steps {
-              script{
-                    def selectedOption = params.OPTION
-                    def selectedOptionName = getOptionName(selectedOption)
-                    echo "Selected option: ${selectedOptionName}"
-              if (selectedOptionName == 'MoreMD staging') {
+              //script{
+              //      def selectedOption = params.OPTION
+              //      def selectedOptionName = getOptionName(selectedOption)
+              //      echo "Selected option: ${selectedOptionName}"
+              //if (selectedOptionName == 'MoreMD staging') {
                 bat "npm i"
                 bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${params.OPTION}"
                 echo "Selected option: ${params.OPTION}"
                 echo "Selected option name: ${getOptionName(params.OPTION)}"
               }
-              }
+             // }
             }
         }
     }
@@ -41,7 +41,7 @@ pipeline {
              archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
         }
     }
-}
+
 
 // Define the function to get the dropdown choices
 def getDropdownChoices() {
