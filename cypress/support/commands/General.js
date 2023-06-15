@@ -16,7 +16,7 @@ class General {
 
   //use e.g. Pages.Identification
   openPage(page) {
-    cy.wait(3000);
+    cy.wait(5000);
     cy.get("#6d7e865a-bc2f-4bd4-81a7-2925f674b192")
       .should("be.visible")
       .click();
