@@ -28,7 +28,7 @@ pipeline {
         always {
             junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
             archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-            echo "Test Results:\n${testResults}"
+            echo "Test Results:${testResults}"
         }
         failure {
              archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
