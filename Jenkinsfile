@@ -21,6 +21,17 @@ pipeline {
                 echo "Selected option name: ${getOptionName(params.ENVIRONMENT)}"
               }
             }
+            stage('Test Results'){
+                steps {
+    script {
+      // Run your tests and capture the results in a variable
+      def testResults = sh(returnStdout: true, script: 'your-test-command --output-format=json')
+
+      // Display the test results using echo
+      echo "Test Results:\n${testResults}"
+    }
+  }
+            }
         }
   
 
@@ -28,7 +39,6 @@ pipeline {
         always {
             junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
             archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-            echo "Test Results:${testResults}"
         }
         failure {
              archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
@@ -48,4 +58,3 @@ def getOptionName(selectedOption) {
     def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging':'https://patient.staging.advinow.ai/PatientApp/business=684', 'Afya Sasa Brain staging':'https://patient.staging.advinow.ai/PatientApp/business=757']
     return optionNames[selectedOption]
 }
-def testResults = sh(returnStdout: true, script: 'your-test-command --output-format=json')
