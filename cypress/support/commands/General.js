@@ -16,10 +16,8 @@ class General {
 
   //use e.g. Pages.Identification
   openPage(page) {
-    cy.wait(5000);
-    cy.get("#6d7e865a-bc2f-4bd4-81a7-2925f674b192")
-      .should("be.visible")
-      .click();
+    cy.wait(8000);
+    cy.get("#6d7e865a-bc2f-4bd4-81a7-2925f674b192").click();
     cy.wait(1000);
     cy.xpath("(//div[@class='ant-space ant-space-vertical'])[2]/div[3]//input")
       .as("btn")

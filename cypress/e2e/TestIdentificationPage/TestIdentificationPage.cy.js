@@ -36,7 +36,7 @@ before(() => {
     welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
     verification.enterOTP(testdata.otp);
     identification.openPage(Pages.Identification);
-    cy.wait(3000);
+    cy.wait(5000);
   });
 });
 
