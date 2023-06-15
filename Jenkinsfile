@@ -21,17 +21,7 @@ pipeline {
                 echo "Selected option name: ${getOptionName(params.ENVIRONMENT)}"
               }
             }
-            stage('Test Results'){
-                steps {
-    script {
-      // Run your tests and capture the results in a variable
-      def testResults = sh(returnStdout: true, script: 'your-test-command --output-format=json')
-
-      // Display the test results using echo
-      echo "Test Results:\n${testResults}"
-    }
-  }
-            }
+ 
         }
   
 
