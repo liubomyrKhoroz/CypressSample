@@ -2,7 +2,7 @@ import "cypress-file-upload";
 
 class State {
   site() {
-    return cy.visit(Cypress.env("URL_MOREMD_STAGE")); //URL_AFYA_BRAIN_STAGE URL_MOREMD_STAGE
+    return cy.visit(Cypress.env("URL_AFYA_BRAIN_STAGE")); //URL_AFYA_BRAIN_STAGE   URL_MOREMD_STAGE   URL_ADVINOW_STAGE
   }
   check() {
     return cy.location("protocol").should("eq", "https:");

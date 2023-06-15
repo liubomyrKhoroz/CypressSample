@@ -1,4 +1,4 @@
-import { getBusiness } from "../state/data";
+import { getBusiness } from "../../e2e/data";
 import General from "./General";
 
 class WelcomePage extends General {
@@ -58,7 +58,12 @@ class WelcomePage extends General {
   }
 
   enterMobilePhone(mobilePhone) {
-    cy.get('[data-testid="phone_number"]').type(mobilePhone);
+    cy.get('[data-testid="phone_number"]').clear().type(mobilePhone);
+    return this;
+  }
+
+  enterEmail(email) {
+    cy.get("#15911894-8884-4074-8412-b7ba49514380").clear().type(email);
     return this;
   }
 
@@ -107,13 +112,6 @@ class WelcomePage extends General {
   }
 
   selectMedicalPatientNo() {
-    cy.get('[data-testid="medicarePatientNo"]').click();
-    return this;
-  }
-
-  completeSurvey() {
-    cy.get('[data-testid="hasGuardianNo"]').click();
-    cy.get('[data-testid="returnPatientNo"]').click();
     cy.get('[data-testid="medicarePatientNo"]').click();
     return this;
   }
@@ -286,14 +284,12 @@ class WelcomePage extends General {
     return this;
   }
 
-  guardianSectionExist() {
-    try {
-      expect(Cypress.$('[data-testid="hasGuardianNo"]')).not.to.exist;
-      return false;
-    } catch (error) {
-      return true;
-    }
-  }
+  // isElementExist(element) {
+  // 	return cy.window().then((win) => {
+  // 		const identifiedElement = win.document.querySelector(element);
+  // 		return identifiedElement !== null;
+  // 	})
+  // }
 
   medicalPatientSectionExist() {
     try {
@@ -319,7 +315,7 @@ class WelcomePage extends General {
     return this;
   }
 
-  validatePacientNameLabel(labelText) {
+  validatePatientNameLabel(labelText) {
     cy.get(
       '[style="margin-bottom: 0px; row-gap: 0px;"] > .ant-form-item-label > label > p'
     ).should("have.text", labelText);
@@ -492,3 +488,17 @@ class WelcomePage extends General {
   }
 }
 export default WelcomePage;
+
+export function guardianSectionExist() {
+  const expected = 5;
+  return cy
+    .xpath(
+      '//*[contains(@for, "phone_number") or contains(@for, "email")]/ancestor::div[contains(@class, "signin")]/following-sibling::div'
+    )
+    .its("length")
+    .then((length) => {
+      const count = Number(length);
+      const result = expected < count;
+      return cy.wrap(result);
+    });
+}

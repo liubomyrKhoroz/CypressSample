@@ -1,13 +1,13 @@
-import State from "../support/state/State";
+import State from "../../support/state/State";
 import WelcomePage, {
   guardianSectionExist,
-} from "../support/commands/WelcomePage";
-import WelcomePageAfya from "../support/commands/AfyaSasa/WelcomePageAfya";
-import VerificationPage from "../support/commands/VerificationPage";
-import IdentificationPage from "../support/commands/IdentificationPage";
-import testdata, { randomName } from "./testdata";
-import data, { Pages } from "./data";
-//
+} from "../../support/commands/WelcomePage";
+import WelcomePageAfya from "../../support/commands/AfyaSasa/WelcomePageAfya";
+import VerificationPage from "../../support/commands/VerificationPage";
+import IdentificationPage from "../../support/commands/IdentificationPage";
+import testdata, { randomName } from "../testdata";
+import data, { Pages } from "../data";
+
 const state = new State();
 let welcome;
 const verification = new VerificationPage();
@@ -34,7 +34,7 @@ before(() => {
       }
     });
     welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
-    verification.enterOTP(data.otp);
+    verification.enterOTP(testdata.otp);
     identification.openPage(Pages.Identification);
     cy.wait(3000);
   });

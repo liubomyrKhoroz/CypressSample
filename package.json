@@ -3,6 +3,7 @@
     "@cypress/xpath": "^2.0.3",
     "cypress": "^12.13.0",
     "cypress-downloadfile": "^1.2.3",
-    "cypress-file-upload": "^5.0.8"
+    "cypress-file-upload": "^5.0.8",
+    "cypress-xpath": "^2.0.1"
   }
 }

@@ -1,35 +1,52 @@
 import State from "../../support/state/State";
-import WelcomePage from "../../support/commands/WelcomePage";
-import VerificationPage from "../../support/commands/VereficationPage";
+import WelcomePage, {
+  guardianSectionExist,
+} from "../../support/commands/WelcomePage";
+import WelcomePageAfya from "../../support/commands/AfyaSasa/WelcomePageAfya";
+import VerificationPage from "../../support/commands/VerificationPage";
+import testdata from "../testdata";
+import data from "../data";
 
 const state = new State();
 let welcome = new WelcomePage();
 const verification = new VerificationPage();
-const sessionName = "login";
 
-beforeEach(() => {
-  cy.session(sessionName, () => {
-    state.site();
+before(() => {
+  state.site();
+  cy.wait(3000);
+  cy.location("href").then((url) => {
+    if (url.includes("757") || url.includes("750")) {
+      welcome = new WelcomePageAfya();
+    }
     welcome
-      .enterPatientFirstName("max")
-      .enterPatientLastName("last")
-      .enterDOB("02/02/2002")
-      .enterMobilePhone("5555555555")
-      .selectGuardianNo()
-      .selectVisitedBeforeNo()
-      .selectMedicalPatientNo()
-      .agreeTerms()
-      .submitChanges();
-    verification.enterOTP("0");
+      .selectEnglishLanguage()
+      .enterPatientName(
+        testdata.first_name,
+        testdata.mid_name,
+        testdata.first_name
+      )
+      .enterDOB(testdata.dob)
+      .selectMobilePhone()
+      .enterMobilePhone(testdata.phone_number);
+    guardianSectionExist().then((exist) => {
+      if (exist === true) {
+        welcome.selectGuardianNo();
+      }
+    });
+    welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
   });
 });
 
-describe(" Testting Verification page ", () => {
+describe(" Testing Verification page ", () => {
   it(" Enter wrong OTP ", () => {
-    //cy.visit('https://patient.staging.advinow.ai/PatientApp/dashboard/appointment')
+    verification
+      .enterOTP(testdata.otp1)
+      .validateNotification(data.message_wrong_otp_phone);
   });
 
-  it(" Enter wrong OTP ", () => {
-    //cy.visit('https://patient.staging.advinow.ai/PatientApp/dashboard/appointment')
+  it(" Enter correct OTP ", () => {
+    verification
+      .enterOTP(testdata.otp)
+      .validateNotification(data.message_verified);
   });
 });

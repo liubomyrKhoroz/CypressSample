@@ -1,22 +1,27 @@
 import WelcomePage from "../WelcomePage";
-import data from "../../state/data";
+import data from "../../../e2e/data";
 
 class WelcomePageAfya extends WelcomePage {
   selectEnglishLanguage() {
-    cy.get("[data-mantine-stop-propagation]").click();
+    cy.get("[readonly]").click();
     cy.get('[role="option"]').eq(0).as("btn").click();
     return this;
   }
 
   selectSpanishLanguage() {
-    cy.get("[data-mantine-stop-propagation]").click();
+    cy.get("[readonly]").click();
     cy.get('[role="option"]').eq(1).as("btn").click();
     return this;
   }
 
   selectSwahiliLanguage() {
-    cy.get("[data-mantine-stop-propagation]").click();
+    cy.get("[readonly]").click();
     cy.get('[role="option"]').eq(2).as("btn").click();
+    return this;
+  }
+
+  enterMobilePhone(mobilePhone) {
+    cy.get("#15911894-8884-4074-8412-b7ba49514380").clear().type(mobilePhone);
     return this;
   }
 
@@ -34,10 +39,6 @@ class WelcomePageAfya extends WelcomePage {
 
   verifySwahiliSelected() {
     cy.get("[data-mantine-stop-propagation]").should("have.value", "Kiswahili");
-    return this;
-  }
-
-  verifyGuardianIsEmpty() {
     return this;
   }
 
@@ -63,7 +64,7 @@ class WelcomePageAfya extends WelcomePage {
   }
 
   validatePreferredContactSection(labelText, optionMobilePhone, optionEmail) {
-    optionMobilePhone = data.option_whatsup_en;
+    optionMobilePhone = data.option_whats_app_en;
     cy.get('[for="normal_login_preferredMethod"]').should(
       "have.text",
       labelText
@@ -85,10 +86,6 @@ class WelcomePageAfya extends WelcomePage {
     );
     cy.get(".ant-select-selection-item").should("have.text", "🇹🇿 +255");
     cy.get("#15911894-8884-4074-8412-b7ba49514380").should("not.have.value");
-    return this;
-  }
-
-  validateGuardianSection(labelText, optionYes, optionNo) {
     return this;
   }
 
