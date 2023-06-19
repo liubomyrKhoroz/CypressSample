@@ -1,17 +1,22 @@
 const { defineConfig } = require("cypress");
-const { merge } = require("mochawesome-merge");
-const generator = require("mochawesome-report-generator");
 
 module.exports = (on, config) => {
   // Other Cypress configurations...
 
-  // Define a task to merge and generate the Mochawesome report
+  // Define a task to generate the Mochawesome report
   on("after:run", (results) => {
-    // Merge all Mochawesome JSON report files
-    merge().then((report) => {
+    const generateReport = async () => {
+      const { merge } = require("mochawesome-merge");
+      const generator = require("mochawesome-report-generator");
+
+      // Merge all Mochawesome JSON report files
+      const report = await merge();
+
       // Generate the HTML report
-      generator.create(report);
-    });
+      await generator.create(report);
+    };
+
+    return generateReport();
   });
 
   // Return the config
