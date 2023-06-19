@@ -31,7 +31,7 @@ always {
             def reportsDir = 'cypress/reports/junit'
             dir(reportsDir) {
                 // Print the contents of the reports directory
-                sh 'ls -R'
+                bat 'ls -R'
             }
             junit testResults: '**/cypress/reports/junit/*.xml'
         }
