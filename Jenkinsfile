@@ -25,16 +25,19 @@ pipeline {
         }
   
 
-    post {
-        always {
-            junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
-            archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-        }
-        failure {
-             archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
-        }
-        
+post {
+    always {
+        junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
+        archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
     }
+    failure {
+        archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
+    }
+    success {
+        step([$class: 'HtmlPublisher', reportName: 'Cypress HTML Report', reportFiles: 'cypress/reports/mochawesome/*.html', keepAll: true])
+    }
+}
+
 }
 
 def getDropdownChoices() {
