@@ -35,6 +35,10 @@ post {
     }
     success {
         script {
+            dir('cypress/reports/mochawesome') {
+                // Create the directory if it doesn't exist
+                sh 'mkdir -p .'
+            }
             publishHTML([
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
@@ -46,6 +50,7 @@ post {
         }
     }
 }
+
 
 
 }
