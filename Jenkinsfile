@@ -27,7 +27,7 @@ pipeline {
 
 post {
     always {
-        junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
+        junit testResults: '**/cypress/reports/junit/*.xml'
         archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
     }
     failure {
@@ -37,7 +37,7 @@ post {
         script {
             dir('cypress/reports/mochawesome') {
                 // Create the directory if it doesn't exist
-                bat 'mkdir .'
+                bat 'if not exist . mkdir .'
             }
             publishHTML([
                 allowMissing: false,

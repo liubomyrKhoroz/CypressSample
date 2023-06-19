@@ -1,15 +1,16 @@
 const { defineConfig } = require("cypress");
-/*const path = require("path");
 
 module.exports = {
-  reporter: "cypress-mochawesome-reporter",
+  // ... other configurations
+  reporter: "cypress-multi-reporters",
   reporterOptions: {
-    reportDir: path.join("cypress", "reports", "mochawesome"),
-    overwrite: false,
-    html: false,
-    json: true,
+    reporterEnabled: "junit",
+    junitReporterOptions: {
+      mochaFile: "cypress/reports/junit/test-results.[hash].xml",
+      toConsole: true,
+    },
   },
-};*/
+};
 
 module.exports = {
   //chromeWebSecurity: true,
