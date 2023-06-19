@@ -26,8 +26,15 @@ pipeline {
   
 
 post {
-    always {
-        junit testResults: '**/cypress/reports/*.xml'
+always {
+        script {
+            def reportsDir = 'cypress/reports/junit'
+            dir(reportsDir) {
+                // Print the contents of the reports directory
+                sh 'ls -R'
+            }
+            junit testResults: '**/cypress/reports/junit/*.xml'
+        }
         archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
     }
     failure {
