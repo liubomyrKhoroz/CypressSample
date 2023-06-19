@@ -27,7 +27,7 @@ pipeline {
 
 post {
     always {
-        junit testResults: '**/cypress/reports/junit/*.xml'
+        junit testResults: '**/cypress/reports/*.xml'
         archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
     }
     failure {
