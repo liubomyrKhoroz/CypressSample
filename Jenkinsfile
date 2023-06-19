@@ -34,9 +34,19 @@ post {
         archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
     }
     success {
-        step([$class: 'HtmlPublisher', reportName: 'Cypress HTML Report', reportFiles: 'cypress/reports/mochawesome/*.html', keepAll: true])
+        script {
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'cypress/reports/mochawesome',
+                reportFiles: 'index.html',
+                reportName: 'Cypress HTML Report'
+            ])
+        }
     }
 }
+
 
 }
 
