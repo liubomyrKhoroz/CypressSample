@@ -37,7 +37,7 @@ post {
         script {
             dir('cypress/reports/mochawesome') {
                 // Create the directory if it doesn't exist
-                sh 'mkdir -p .'
+                bat 'mkdir .'
             }
             publishHTML([
                 allowMissing: false,
@@ -50,6 +50,7 @@ post {
         }
     }
 }
+
 
 
 
