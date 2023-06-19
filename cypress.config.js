@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-const path = require("path");
+/*const path = require("path");
 
 module.exports = {
   reporter: "cypress-mochawesome-reporter",
@@ -9,7 +9,7 @@ module.exports = {
     html: false,
     json: true,
   },
-};
+};*/
 
 module.exports = {
   //chromeWebSecurity: true,
