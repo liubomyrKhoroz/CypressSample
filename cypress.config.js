@@ -1,15 +1,21 @@
 const { defineConfig } = require("cypress");
+const { merge } = require("mochawesome-merge");
+const generator = require("mochawesome-report-generator");
 
-module.exports = {
-  // ... other configurations
-  reporter: "cypress-multi-reporters",
-  reporterOptions: {
-    reporterEnabled: "junit",
-    junitReporterOptions: {
-      mochaFile: "cypress/reports/junit/test-results.[hash].xml",
-      toConsole: true,
-    },
-  },
+module.exports = (on, config) => {
+  // Other Cypress configurations...
+
+  // Define a task to merge and generate the Mochawesome report
+  on("after:run", (results) => {
+    // Merge all Mochawesome JSON report files
+    merge().then((report) => {
+      // Generate the HTML report
+      generator.create(report);
+    });
+  });
+
+  // Return the config
+  return config;
 };
 
 module.exports = {
