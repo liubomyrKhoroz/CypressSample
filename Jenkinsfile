@@ -1,76 +1,55 @@
 pipeline {
-    agent any
+  agent any
 
-    parameters {
-        choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
-        choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/','cypress/e2e/TestDemographicsPage/','cypress/e2e/TestIdentificationPage/'], description: "Enter the test scenarios you want to run")
-         choice(
-            choices: getDropdownChoices(),
-            description: 'Select environment for test run',
-            name: 'ENVIRONMENT'
-        )
- 
-    }
+  parameters {
+    choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
+    choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/', 'cypress/e2e/TestDemographicsPage/', 'cypress/e2e/TestIdentificationPage/'], description: "Enter the test scenarios you want to run")
+    choice(
+      choices: getDropdownChoices(),
+      description: 'Select environment for test run',
+      name: 'ENVIRONMENT'
+    )
+  }
 
-    stages {
-        stage('Testing') {
-            steps {
-                bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_SONOSPINE_STAGE=${getOptionName(params.ENVIRONMENT)}"
-                echo "Selected option: ${params.ENVIRONMENT}"
-                echo "Selected option name: ${getOptionName(params.ENVIRONMENT)}"
-              }
-            }
- 
-        }
-  
-
-post {
-always {
+  stages {
+    stage('Testing') {
+      steps {
         script {
-            def reportsDir = 'cypress/reports/junit'
-            dir(reportsDir) {
-                // Print the contents of the reports directory
-                bat 'dir /s'
-            }
-            junit testResults: '**/cypress/reports/junit/*.xml'
+          // Install necessary dependencies
+          bat "npm install"
+
+          // Run Cypress tests and generate mochawesome report
+          bat "npx cypress run --browser %BROWSER% --headed --spec %TESTSUITE% --env URL_MOREMD_STAGE=${getOptionName(params.ENVIRONMENT)}"
+          bat "npx mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/mochawesome-report.json"
+          bat "npx mochawesome-report-generator cypress/reports/mochawesome/mochawesome-report.json --reportDir cypress/reports/mochawesome/html --reportTitle 'Cypress Tests Report'"
         }
-        archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
+      }
     }
+  }
+
+  post {
+    always {
+      // Archive and publish reports
+      junit keepLongStdio: true, testResults: 'cypress/reports/junit/*.xml', allowEmptyResults: true
+      archiveArtifacts artifacts: 'cypress/reports/mochawesome/html/**', onlyIfSuccessful: false
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'cypress/reports/mochawesome/html', reportFiles: 'index.html', reportName: 'Cypress Tests Report'])
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'cypress/reports/junit', reportFiles: '*.xml', reportName: 'Cypress JUnit Report'])
+    }
+
     failure {
-        archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
+      // Archive screenshots on failure
+      archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
     }
-    success {
-        script {
-            dir('cypress/reports/mochawesome') {
-                // Create the directory if it doesn't exist
-                bat 'if not exist . mkdir .'
-            }
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'cypress/reports/mochawesome',
-                reportFiles: 'index.html',
-                reportName: 'Cypress HTML Report'
-            ])
-        }
-    }
-}
-
-
-
-
+  }
 }
 
 def getDropdownChoices() {
-
-    def options = ['MoreMD staging', 'Afya Sasa Cardiac staging', 'Sonospine staging', 'Advinow staging', 'Barrow staging','Afya Sasa Brain staging']
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging':'https://patient.staging.advinow.ai/PatientApp/business=684','Afya Sasa Brain staging':'https://patient.staging.advinow.ai/PatientApp/business=757']
-    return options
+  def options = ['MoreMD staging', 'Afya Sasa Cardiac staging', 'Sonospine staging', 'Advinow staging', 'Barrow staging', 'Afya Sasa Brain staging']
+  def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging': 'https://patient.staging.advinow.ai/PatientApp/business=684', 'Afya Sasa Brain staging': 'https://patient.staging.advinow.ai/PatientApp/business=757']
+  return options
 }
 
 def getOptionName(selectedOption) {
-    def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging':'https://patient.staging.advinow.ai/PatientApp/business=684', 'Afya Sasa Brain staging':'https://patient.staging.advinow.ai/PatientApp/business=757']
-    return optionNames[selectedOption]
+  def optionNames = ['MoreMD staging': 'https://patient.staging.advinow.ai/PatientApp/business=754', 'Afya Sasa Cardiac staging': 'https://patient.staging.advinow.ai/PatientApp/business=750', 'Sonospine staging': 'https://patient.staging.advinow.ai/PatientApp/business=749', 'Advinow staging': 'https://patient.staging.advinow.ai/PatientApp/business=301', 'Barrow staging': 'https://patient.staging.advinow.ai/PatientApp/business=684', 'Afya Sasa Brain staging': 'https://patient.staging.advinow.ai/PatientApp/business=757']
+  return optionNames[selectedOption]
 }
