@@ -19,7 +19,9 @@ pipeline {
           bat "npm install"
 
           // Run Cypress tests and generate mochawesome report
-          bat "npx cypress run --browser %BROWSER% --headed --spec %TESTSUITE% --env =${getOptionName(params.ENVIRONMENT)}"
+            bat "npx cypress run --browser ${BROWSER} --headed --spec ${TESTSUITE} --env URL_MOREMD_STAGE=${getOptionName(params.ENVIRONMENT)}"
+            echo "Selected option: ${params.ENVIRONMENT}"
+            echo "Selected option name: ${getOptionName(params.ENVIRONMENT)}"
            }
       }
     }
