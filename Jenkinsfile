@@ -28,9 +28,7 @@ pipeline {
   post {
     always {
       // Archive and publish reports
-      junit keepLongStdio: true, testResults: 'test-results/*.xml', allowEmptyResults: true
-      archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', onlyIfSuccessful: false
-      archiveArtifacts: 'cypress/reports/html/index.html', onlyIfSuccessful: false
+      archiveArtifacts artifacts: 'C:/QA/Sample/cypress/reports/html/index.html', onlyIfSuccessful: false
        }
 
     failure {
