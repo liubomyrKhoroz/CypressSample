@@ -20,8 +20,8 @@ pipeline {
 
           // Run Cypress tests and generate mochawesome report
           bat "npx cypress run --browser %BROWSER% --headed --spec %TESTSUITE% --env URL_MOREMD_STAGE=${getOptionName(params.ENVIRONMENT)}"
-          bat "npx mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/mochawesome-report.json"
-          bat "npx mochawesome-report-generator cypress/reports/mochawesome/mochawesome-report.json --reportDir cypress/reports/mochawesome/html --reportTitle 'Cypress Tests Report'"
+          //bat "npx mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/mochawesome-report.json"
+          //bat "npx mochawesome-report-generator cypress/reports/mochawesome/mochawesome-report.json --reportDir cypress/reports/mochawesome/html --reportTitle 'Cypress Tests Report'"
         }
       }
     }
