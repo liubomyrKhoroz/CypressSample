@@ -9,7 +9,7 @@ module.exports = {
   reporter: "cypress-mochawesome-reporter",
   e2e: {
     testIsolation: false,
-    defaultCommandTimeout: 38000,
+    defaultCommandTimeout: 10000,
 
     setupNodeEvents(on, config) {
       on("before:run", async (details) => {
