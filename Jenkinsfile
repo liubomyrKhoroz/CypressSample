@@ -28,7 +28,7 @@ pipeline {
   post {
     always {
       // Archive and publish reports
-      archiveArtifacts artifacts: 'cypress/reports/index.html', onlyIfSuccessful: false
+      archiveArtifacts artifacts: 'cypress/reports/html/index.html', onlyIfSuccessful: false
        }
 
     failure {
