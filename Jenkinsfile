@@ -20,7 +20,7 @@ pipeline {
 
           // Run Cypress tests and generate mochawesome report
           bat "npx cypress run --browser %BROWSER% --headed --spec %TESTSUITE% --env =${getOptionName(params.ENVIRONMENT)}"
-          }
+           }
       }
     }
   }
@@ -28,8 +28,8 @@ pipeline {
   post {
     always {
       // Archive and publish reports
-      archiveArtifacts: 'cypress/reports/index.html', onlyIfSuccessful: false
-     }
+      archiveArtifacts artifacts: 'cypress/reports/index.html', onlyIfSuccessful: false
+       }
 
     failure {
       // Archive screenshots on failure
