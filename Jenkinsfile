@@ -20,9 +20,7 @@ pipeline {
 
           // Run Cypress tests and generate mochawesome report
           bat "npx cypress run --browser %BROWSER% --headed --spec %TESTSUITE% --env =${getOptionName(params.ENVIRONMENT)}"
-          //bat "npx mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/mochawesome-report.json"
-          //bat "npx mochawesome-report-generator cypress/reports/mochawesome/mochawesome-report.json --reportDir cypress/reports/mochawesome/html --reportTitle 'Cypress Tests Report'"
-        }
+          }
       }
     }
   }
@@ -30,11 +28,8 @@ pipeline {
   post {
     always {
       // Archive and publish reports
-      junit keepLongStdio: true, testResults: 'cypress/reports/junit/*.xml', allowEmptyResults: true
-      archiveArtifacts artifacts: 'cypress/reports/*.html', onlyIfSuccessful: false
-      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'cypress/reports', reportFiles: 'index.html', reportName: 'Cypress Tests Report'])
-      //publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'cypress/reports/junit', reportFiles: '*.xml', reportName: 'Cypress JUnit Report'])
-    }
+      archiveArtifacts: 'cypress/reports/index.html', onlyIfSuccessful: false
+     }
 
     failure {
       // Archive screenshots on failure
