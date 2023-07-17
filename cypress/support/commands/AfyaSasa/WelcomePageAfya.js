@@ -1,105 +1,99 @@
-import WelcomePage from "../WelcomePage";
-import data from "../../../e2e/data";
+import WelcomePage from "../WelcomePage"
+import data from "../../../e2e/data"
 
 class WelcomePageAfya extends WelcomePage {
-  selectEnglishLanguage() {
-    cy.get("[readonly]").click();
-    cy.get('[role="option"]').eq(0).as("btn").click();
-    return this;
-  }
 
-  selectSpanishLanguage() {
-    cy.get("[readonly]").click();
-    cy.get('[role="option"]').eq(1).as("btn").click();
-    return this;
-  }
+    locatorsAfya = {
+        LanguageField: '[readonly]',
+        LanguageOption: '[role="option"]',
+        LanguageFieldSelected: '[data-mantine-stop-propagation]',
+        DOB: '[data-testid="dob"]',
+        DOBLabel: '[for="normal_login_date_of_birth"] > span',
+        MobileLabel: '[for=normal_login_phone_number] > p',
+        MobilePhoneInput: '#15911894-8884-4074-8412-b7ba49514380',
+        MobileCountry: '.ant-select-selection-item',
+        PreferredContactsLabel: '[for="normal_login_preferredMethod"]',
+        MobileOptionLabel: '#normal_login_preferredMethod > :nth-child(1) > :nth-child(2)',
+        EmailOptionLabel: '#normal_login_preferredMethod > :nth-child(2) > :nth-child(2)',
+        SubmitButton: '[data-testid="submitButton"] > span',
+    }
 
-  selectSwahiliLanguage() {
-    cy.get("[readonly]").click();
-    cy.get('[role="option"]').eq(2).as("btn").click();
-    return this;
-  }
+    selectEnglishLanguage() {
+        cy.get(this.locatorsAfya.LanguageField).click()
+        cy.get(this.locatorsAfya.LanguageOption).eq(0).as('btn').click()
+        return this
+    }
 
-  enterMobilePhone(mobilePhone) {
-    cy.get("#15911894-8884-4074-8412-b7ba49514380").clear().type(mobilePhone);
-    return this;
-  }
+    selectSpanishLanguage() {
+        cy.get(this.locatorsAfya.LanguageField).click()
+        cy.get(this.locatorsAfya.LanguageOption).eq(1).as('btn').click()
+        return this
+    }
 
-  // VERIFICATIONS
+    selectSwahiliLanguage() {
+        cy.get(this.locatorsAfya.LanguageField).click()
+        cy.get(this.locatorsAfya.LanguageOption).eq(2).as('btn').click()
+        return this
+    }
 
-  verifyEnglishSelected() {
-    cy.get("[data-mantine-stop-propagation]").should("have.value", "English");
-    return this;
-  }
+    enterMobilePhone(mobilePhone) {
+        cy.get(this.locatorsAfya.MobilePhoneInput).clear().type(mobilePhone)
+        return this
+    }
 
-  verifySpanishSelected() {
-    cy.get("[data-mantine-stop-propagation]").should("have.value", "Español");
-    return this;
-  }
+    // VERIFICATIONS
 
-  verifySwahiliSelected() {
-    cy.get("[data-mantine-stop-propagation]").should("have.value", "Kiswahili");
-    return this;
-  }
+    verifyEnglishSelected() {
+        cy.get(this.locatorsAfya.LanguageFieldSelected).should('have.value', 'English')
+        return this
+    }
 
-  verifyMedicalPatientIsEmpty() {
-    return this;
-  }
+    verifySpanishSelected() {
+        cy.get(this.locatorsAfya.LanguageFieldSelected).should('have.value', 'Español')
+        return this
+    }
 
-  // VALIDATIONS
+    verifySwahiliSelected() {
+        cy.get(this.locatorsAfya.LanguageFieldSelected).should('have.value', 'Kiswahili')
+        return this
+    }
 
-  validateIcon() {}
+    verifyMedicalPatientIsEmpty() {
+        return this
+    }
 
-  validateDOBSection(labelText, placeholder) {
-    placeholder = data.placeholder_dob2_en;
-    cy.get('[for="normal_login_date_of_birth"] > span').should(
-      "have.text",
-      labelText
-    );
-    cy.get('[data-testid="dob"]')
-      .should("not.have.value")
-      .and("have.attr", "placeholder")
-      .and("eq", placeholder);
-    return this;
-  }
+    // VALIDATIONS
 
-  validatePreferredContactSection(labelText, optionMobilePhone, optionEmail) {
-    optionMobilePhone = data.option_whats_app_en;
-    cy.get('[for="normal_login_preferredMethod"]').should(
-      "have.text",
-      labelText
-    );
-    cy.get(
-      "#normal_login_preferredMethod > :nth-child(1) > :nth-child(2)"
-    ).should("have.text", optionMobilePhone);
-    cy.get(
-      "#normal_login_preferredMethod > :nth-child(2) > :nth-child(2)"
-    ).should("have.text", optionEmail);
-    return this;
-  }
+    validateDOBSection(labelText, placeholder) {
+        placeholder = data.placeholder_dob2_en
+        cy.get(this.locatorsAfya.DOBLabel).should('have.text', labelText)
+        cy.get(this.locatorsAfya.dob).should('not.have.value').and('have.attr', 'placeholder').and('eq', placeholder)
+        return this
+    }
 
-  validateMobilePhoneSection(labelText, placeholder) {
-    labelText = data.label_whatsapp_en;
-    cy.get("[for=normal_login_phone_number] > p").should(
-      "have.text",
-      labelText
-    );
-    cy.get(".ant-select-selection-item").should("have.text", "🇹🇿 +255");
-    cy.get("#15911894-8884-4074-8412-b7ba49514380").should("not.have.value");
-    return this;
-  }
+    validatePreferredContactSection(labelText, optionMobilePhone, optionEmail) {
+        optionMobilePhone = data.option_whats_app_en
+        cy.get(this.locatorsAfya.PreferredContactsLabel).should('have.text', labelText)
+        cy.get(this.locatorsAfya.MobileOptionLabel).should('have.text', optionMobilePhone)
+        cy.get(this.locatorsAfya.EmailOptionLabel).should('have.text', optionEmail)
+        return this
+    }
 
-  validateMedicalPatientSection() {
-    return this;
-  }
+    validateMobilePhoneSection(labelText, placeholder) {
+        labelText = data.label_whatsapp_en
+        cy.get(this.locatorsAfya.MobileLabel).should('have.text', labelText)
+        cy.get(this.locatorsAfya.MobileCountry).should('have.text', "🇹🇿 +255")
+        cy.get(this.locatorsAfya.MobilePhoneInput).should('not.have.value')
+        return this
+    }
 
-  validateButtonSubmit(buttonSubmit) {
-    buttonSubmit = data.button_next;
-    cy.get('[data-testid="submitButton"] > span').should(
-      "have.text",
-      buttonSubmit
-    );
-    return this;
-  }
+    // validateMedicalPatientSection() {return this}
+
+    validateButtonSubmit(buttonSubmit) {
+        buttonSubmit = data.button_next
+        cy.get(this.locatorsAfya.SubmitButton).should('have.text', buttonSubmit)
+        return this
+    }
 }
+
 export default WelcomePageAfya;

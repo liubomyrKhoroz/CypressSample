@@ -1,12 +1,10 @@
-import State from "../../support/state/State";
-import WelcomePage, {
-  guardianSectionExist,
-} from "../../support/commands/WelcomePage";
-import WelcomePageAfya from "../../support/commands/AfyaSasa/WelcomePageAfya";
-import VerificationPage from "../../support/commands/VerificationPage";
-import IdentificationPage from "../../support/commands/IdentificationPage";
-import testdata, { randomName } from "../testdata";
-import data, { Pages } from "../data";
+import State from "../support/state/State";
+import WelcomePage from "../support/commands/WelcomePage";
+import WelcomePageAfya from "../support/commands/AfyaSasa/WelcomePageAfya";
+import VerificationPage from "../support/commands/VerificationPage";
+import IdentificationPage from "../support/commands/IdentificationPage";
+import testdata, { randomName } from "./testdata";
+import data, { Pages } from "./data";
 
 const state = new State();
 let welcome;
@@ -28,19 +26,21 @@ before(() => {
       .enterDOB(testdata.dob)
       .selectMobilePhone()
       .enterMobilePhone(testdata.phone_number);
-    guardianSectionExist().then((exist) => {
-      if (exist === true) {
-        welcome.selectGuardianNo();
-      }
-    });
+    if (welcome.guardianSectionExist()) {
+      welcome.selectGuardianNo();
+    }
     welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
     verification.enterOTP(testdata.otp);
     identification.openPage(Pages.Identification);
-    cy.wait(5000);
+    cy.wait(3000);
   });
 });
 
 describe(" Testing Identification page ", () => {
+  it(" Icon ", () => {
+    welcome.validateIcon();
+  });
+
   it(" Ability to Skip ", () => {
     identification.buttonSkip().verifyURLnotContain("identification");
     cy.wait(500);
@@ -51,7 +51,7 @@ describe(" Testing Identification page ", () => {
     identification.openCameraWindow().verifyCameraWindowOpened().pressCancel();
   });
 
-  it(" button Cancel ", () => {
+  it(" Button Cancel ", () => {
     identification
       .openCameraWindow()
       .pressCancel()
@@ -68,6 +68,15 @@ describe(" Testing Identification page ", () => {
       .openCameraWindow()
       .verifyPictureNotAdded()
       .takePhoto()
+      .verifyPictureAdded()
+      .pressCancel();
+  });
+
+  it(" Button Upload picture ", () => {
+    identification
+      .openCameraWindow()
+      .verifyPictureNotAdded()
+      .uploadPhoto("licenseFront")
       .verifyPictureAdded()
       .pressCancel();
   });
@@ -142,14 +151,14 @@ describe(" Testing Identification page ", () => {
   it(" Saving images ", () => {
     identification
       .openCameraWindow()
-      .takePhoto()
+      .uploadPhoto("licenseFront")
       .verifyPictureAdded()
       .savePicture()
       .verifyPictureSaved()
 
       .buttonNext()
       .openCameraWindow()
-      .takePhoto()
+      .uploadPhoto("licenseBack")
       .verifyPictureAdded()
       .savePicture()
       .verifyPictureSaved()
@@ -160,13 +169,4 @@ describe(" Testing Identification page ", () => {
       .buttonPrevious()
       .verifyPictureSaved();
   });
-
-  // it(' Button Upload picture ', () => {
-  //     identification
-  //         .openCameraWindow()
-  //         .verifyPictureNotAdded()
-  //         .uploadPhoto('images.jpg')
-  //         .verifyPictureAdded()
-  //         .pressCancel()
-  // })
 });

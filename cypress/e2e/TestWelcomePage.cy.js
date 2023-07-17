@@ -1,17 +1,10 @@
-import State from "../../support/state/State";
-import WelcomePage, {
-  guardianSectionExist,
-} from "../../support/commands/WelcomePage";
-import WelcomePageAdvinow from "../../support/commands/Advinow/WelcomePageAdvinow";
-import WelcomePageAfyaBrain from "../../support/commands/AfyaSasa/WelcomePageAfyaBrain";
-import WelcomePageAfyaCardiac from "../../support/commands/AfyaSasa/WelcomePageAfyaCardiac";
-import WelcomePageBarrow from "../../support/commands/Barrow/WelcomePageBarrow";
-import WelcomePageMoremd from "../../support/commands/MoreMD/WelcomePageMoremd";
-import WelcomePageSonospine from "../../support/commands/SonoSpine/WelcomePageSonospine";
-import VerificationPage from "../../support/commands/VerificationPage";
-import testdata from "../testdata";
-import data from "../data";
-import { setBusiness } from "../data";
+import State from "../support/state/State";
+import WelcomePage from "../support/commands/WelcomePage";
+import WelcomePageAfya from "../support/commands/AfyaSasa/WelcomePageAfya";
+import VerificationPage from "../support/commands/VerificationPage";
+import testdata from "./testdata";
+import data from "./data";
+import { setBusiness } from "./data";
 
 const state = new State();
 let welcome = new WelcomePage();
@@ -25,29 +18,26 @@ describe(" Testing Welcome page ", () => {
   it("Validate the URL", () => {
     cy.wait(3000);
     cy.location("href").then((url) => {
+      if (url.includes("757") || url.includes("750")) {
+        welcome = new WelcomePageAfya();
+      }
       switch (true) {
         case url.includes("301"):
-          welcome = new WelcomePageAdvinow();
           setBusiness("Advinow");
           break;
         case url.includes("757"):
-          welcome = new WelcomePageAfyaBrain();
           setBusiness("Afya Sasa Brain");
           break;
         case url.includes("750"):
-          welcome = new WelcomePageAfyaCardiac();
           setBusiness("Afya Sasa Cardiac");
           break;
         case url.includes("684"):
-          welcome = new WelcomePageBarrow();
           setBusiness("Barrow");
           break;
         case url.includes("754"):
-          welcome = new WelcomePageMoremd();
           setBusiness("MoreMD");
           break;
         case url.includes("749"):
-          welcome = new WelcomePageSonospine();
           setBusiness("SonoSpine");
           break;
         default:
@@ -56,10 +46,13 @@ describe(" Testing Welcome page ", () => {
     });
   });
 
+  it(" Icon ", () => {
+    welcome.validateIcon();
+  });
+
   it(" First open displaying validation - English ", () => {
     welcome
       .selectEnglishLanguage()
-      .validateIcon()
       .validatePatientNameLabel(data.label_patient_name_en)
       .validatePatientFirstName(data.placeholder_first_name_en)
       .validatePatientMidName(data.placeholder_mid_name_en)
@@ -74,7 +67,7 @@ describe(" Testing Welcome page ", () => {
       .verifyMobilePhoneSelected()
       .validateMobilePhoneSection(
         data.label_mobile_phone_en,
-        data.placeholder_mobile_phone_en
+        data.placeholder_mobile_phone
       )
 
       .verifyVisitedBeforeIsEmpty()
@@ -84,19 +77,16 @@ describe(" Testing Welcome page ", () => {
         data.option_yes_en,
         data.option_no_en
       );
-
-    guardianSectionExist().then((exist) => {
-      if (exist === true) {
-        welcome
-          .verifyGuardianIsEmpty()
-          .verifyGuardianSectionIsHidden()
-          .validateGuardianSection(
-            data.label_guardian_en,
-            data.option_yes_en,
-            data.option_no_en
-          );
-      }
-    });
+    if (welcome.guardianSectionExist()) {
+      welcome
+        .verifyGuardianIsEmpty()
+        .verifyGuardianSectionIsHidden()
+        .validateGuardianSection(
+          data.label_guardian_en,
+          data.option_yes_en,
+          data.option_no_en
+        );
+    }
     welcome
       // .verifyMedicalPatientIsEmpty()
       // .validateMedicalPatientSection(data.label_medical_patient_en, data.option_yes_en, data.option_no_en)
@@ -185,34 +175,32 @@ describe(" Testing Welcome page ", () => {
   });
 
   it(" Guardian section", () => {
-    guardianSectionExist().then((exist) => {
-      if (exist === true) {
-        welcome
-          .selectEnglishLanguage()
-          .verifyGuardianIsEmpty()
-          .verifyGuardianSectionIsHidden()
-          .submitChanges()
-          .validateErrorMessage(5, data.error_field_required)
-          .selectGuardianYes()
-          .verifyGuardianYesSelected()
-          .validateGuardianFirstName(data.placeholder_first_name_en)
-          .validateGuardianLastName(data.placeholder_last_name_en)
-          .validateGuardianRelationship(data.placeholder_relationship_en)
-          .submitChanges()
-          .validateErrorMessage(5, data.error_name_required)
-          .validateErrorMessage(6, data.error_name_required)
-          .validateErrorMessage(7, data.error_relationship_required)
-          .enterGuardianFirstName(testdata.first_name1)
-          .validateErrorMessage(5, data.error_name_numbers)
-          .enterGuardianLastName(testdata.first_name1)
-          .validateErrorMessage(6, data.error_name_numbers)
-          .openGuardianOptions()
-          .validateGuardianOptions(data.list_relationship_en)
-          .selectGuardianNo()
-          .verifyGuardianNoSelected()
-          .verifyGuardianSectionIsHidden();
-      }
-    });
+    if (welcome.guardianSectionExist()) {
+      welcome
+        .selectEnglishLanguage()
+        .verifyGuardianIsEmpty()
+        .verifyGuardianSectionIsHidden()
+        .submitChanges()
+        .validateErrorMessage(5, data.error_field_required)
+        .selectGuardianYes()
+        .verifyGuardianYesSelected()
+        .validateGuardianFirstName(data.placeholder_first_name_en)
+        .validateGuardianLastName(data.placeholder_last_name_en)
+        .validateGuardianRelationship(data.placeholder_relationship_label_en)
+        .submitChanges()
+        .validateErrorMessage(5, data.error_name_required)
+        .validateErrorMessage(6, data.error_name_required)
+        .validateErrorMessage(7, data.error_relationship_required)
+        .enterGuardianFirstName(testdata.first_name1)
+        .validateErrorMessage(5, data.error_name_numbers)
+        .enterGuardianLastName(testdata.first_name1)
+        .validateErrorMessage(6, data.error_name_numbers)
+        .openGuardianOptions()
+        .validateGuardianOptions(data.list_relationship_en)
+        .selectGuardianNo()
+        .verifyGuardianNoSelected()
+        .verifyGuardianSectionIsHidden();
+    }
   });
 
   it(" Visited before section", () => {
@@ -277,11 +265,9 @@ describe(" Testing Welcome page ", () => {
       .enterDOB(testdata.dob)
       .selectMobilePhone()
       .enterMobilePhone(testdata.phone_number);
-    guardianSectionExist().then((exist) => {
-      if (exist === true) {
-        welcome.selectGuardianNo();
-      }
-    });
+    if (welcome.guardianSectionExist()) {
+      welcome.selectGuardianNo();
+    }
     welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
     verification
       .enterOTP(testdata.otp)

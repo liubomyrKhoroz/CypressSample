@@ -1,121 +1,130 @@
-import General from "./General";
+import General from "./General"
 
 class IdentificationPage extends General {
-  openCameraWindow() {
-    cy.get(".style_footerButtonGroup__JDlIm > .ant-btn").click();
-    return this;
-  }
 
-  deletePicture() {
-    cy.get(
-      ".style_footerButtonGroup__JDlIm > .ant-space > .ant-space-item > .ant-btn > span"
-    ).click();
-    return this;
-  }
+    locators = {
+        OpenCameraWindow: '.style_footerButtonGroup__JDlIm > .ant-btn',
+        DeletePictureButton: '.style_footerButtonGroup__JDlIm > .ant-space > .ant-space-item > .ant-btn > span',
+        TakePhotoButton: '.ant-space > :nth-child(1) > .ant-btn > span',
+        UploadPhotoButton: 'input[type="file"]',
+        TrashButton: ':nth-child(3) > .ant-btn',
+        CancelButton: '.ant-modal-footer > :nth-child(1)',
+        SavePictureButton: '.ant-modal-footer > .ant-btn-primary',
+        PreviewPicture: '.ant-row > .ant-image > .ant-image-mask > div',
+        TurnLeftButton: '.ant-image-preview-operations > :nth-child(5)',
+        TurnRightButton: '.ant-image-preview-operations > :nth-child(4)',
+        ZoomOutButton: '.ant-image-preview-operations > :nth-child(3)',
+        ZoomInButton: '.ant-image-preview-operations > :nth-child(2)',
+        ClosePreviewButton: '.ant-image-preview-operations > :nth-child(1)',
+        CameraWindow: '.ant-modal-body',
+        SaveButton: '.ant-modal-footer > .ant-btn-primary',
+        ImagePreview: '.ant-image-preview-img',
+    }
 
-  takePhoto() {
-    cy.get(".ant-space > :nth-child(1) > .ant-btn > span").click();
-    return this;
-  }
+    openCameraWindow() {
+        cy.get(this.locators.OpenCameraWindow).click()
+        return this
+    }
 
-  uploadPhoto(image) {
-    cy.fixture("licenseFront.png", "utf-8").then((fileContent) => {
-      cy.get('input[type="file"]').attachFile({
-        fileContent: fileContent,
-        fileName: "licenseFront.png",
-        mimeType: "image/png",
-      });
-    });
-    return this;
-  }
+    deletePicture() {
+        cy.get(this.locators.DeletePictureButton).click()
+        return this
+    }
 
-  pressTrash() {
-    cy.get(":nth-child(3) > .ant-btn").click();
-    return this;
-  }
+    takePhoto() {
+        cy.get(this.locators.TakePhotoButton).click()
+        return this
+    }
 
-  pressCancel() {
-    cy.get(".ant-modal-footer > :nth-child(1)").click();
-    return this;
-  }
+    uploadPhoto(image) {
+        this.uploadFile(image, this.locators.UploadPhotoButton)
+        return this
+    }
 
-  savePicture() {
-    cy.get(".ant-modal-footer > .ant-btn-primary").click();
-    return this;
-  }
+    pressTrash() {
+        cy.get(this.locators.TrashButton).click()
+        return this
+    }
 
-  previewPicture() {
-    cy.get(".ant-row > .ant-image > .ant-image-mask > div").click();
-    return this;
-  }
+    pressCancel() {
+        cy.get(this.locators.CancelButton).click()
+        return this
+    }
 
-  turnLeft() {
-    cy.get(".ant-image-preview-operations > :nth-child(5)").click();
-    return this;
-  }
+    savePicture() {
+        cy.get(this.locators.SavePictureButton).click()
+        return this
+    }
 
-  turnRight() {
-    cy.get(".ant-image-preview-operations > :nth-child(4)").click();
-    return this;
-  }
+    previewPicture() {
+        cy.get(this.locators.PreviewPicture).click()
+        return this
+    }
 
-  zoomOut() {
-    cy.get(".ant-image-preview-operations > :nth-child(3)").click();
-    return this;
-  }
+    turnLeft() {
+        cy.get(this.locators.TurnLeftButton).click()
+        return this
+    }
 
-  zoomIn() {
-    cy.get(".ant-image-preview-operations > :nth-child(2)").click();
-    return this;
-  }
+    turnRight() {
+        cy.get(this.locators.TurnRightButton).click()
+        return this
+    }
 
-  closePreview() {
-    cy.get(".ant-image-preview-operations > :nth-child(1)").click();
-    return this;
-  }
+    zoomOut() {
+        cy.get(this.locators.ZoomOutButton).click()
+        return this
+    }
 
-  verifyCameraWindowOpened() {
-    cy.get(".ant-modal-body").should("be.visible");
-    return this;
-  }
+    zoomIn() {
+        cy.get(this.locators.ZoomInButton).click()
+        return this
+    }
 
-  verifyCameraWindowClosed() {
-    cy.get(".ant-modal-body").should("not.be.visible");
-    return this;
-  }
+    closePreview() {
+        cy.get(this.locators.ClosePreviewButton).click()
+        return this
+    }
 
-  verifyPictureAdded() {
-    cy.get(".ant-modal-footer > .ant-btn-primary").should("not.be.disabled");
-    return this;
-  }
+    verifyCameraWindowOpened() {
+        cy.get(this.locators.CameraWindow).should('be.visible')
+        return this
+    }
 
-  verifyPictureNotAdded() {
-    cy.get(".ant-modal-footer > .ant-btn-primary").should("be.disabled");
-    return this;
-  }
+    verifyCameraWindowClosed() {
+        cy.get(this.locators.CameraWindow).should('not.be.visible')
+        return this
+    }
 
-  verifyPictureSaved() {
-    cy.get(
-      ".style_footerButtonGroup__JDlIm > .ant-space > .ant-space-item > .ant-btn > span"
-    ).should("exist");
-    return this;
-  }
+    verifyPictureAdded() {
+        cy.get(this.locators.SaveButton).should('not.be.disabled')
+        return this
+    }
 
-  verifyPictureNotSaved() {
-    cy.get(".style_footerButtonGroup__JDlIm > .ant-btn > span").should("exist");
-    return this;
-  }
+    verifyPictureNotAdded() {
+        cy.get(this.locators.SaveButton).should('be.disabled')
+        return this
+    }
 
-  verifyPreviewOpened() {
-    cy.get(".ant-image-preview-img").should("be.visible");
-    return this;
-  }
+    verifyPictureSaved() {
+        cy.get(this.locators.DeletePictureButton).should('exist')
+        return this
+    }
 
-  previewStyleContains(deg) {
-    cy.get(".ant-image-preview-img")
-      .invoke("attr", "style")
-      .should("contain", deg);
-    return this;
-  }
+    verifyPictureNotSaved() {
+        cy.get(this.locators.TakePhotoButton).should('exist')
+        return this
+    }
+
+    verifyPreviewOpened() {
+        cy.get(this.locators.ImagePreview).should('be.visible')
+        return this
+    }
+
+    previewStyleContains(deg) {
+        cy.get(this.locators.ImagePreview).invoke('attr', 'style').should('contain', deg);
+        return this;
+    }
 }
-export default IdentificationPage;
+
+export default IdentificationPage

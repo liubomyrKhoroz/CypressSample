@@ -1,11 +1,9 @@
-import State from "../../support/state/State";
-import WelcomePage, {
-  guardianSectionExist,
-} from "../../support/commands/WelcomePage";
-import WelcomePageAfya from "../../support/commands/AfyaSasa/WelcomePageAfya";
-import VerificationPage from "../../support/commands/VerificationPage";
-import testdata from "../testdata";
-import data from "../data";
+import State from "../support/state/State";
+import WelcomePage from "../support/commands/WelcomePage";
+import WelcomePageAfya from "../support/commands/AfyaSasa/WelcomePageAfya";
+import VerificationPage from "../support/commands/VerificationPage";
+import testdata from "./testdata";
+import data from "./data";
 
 const state = new State();
 let welcome = new WelcomePage();
@@ -28,16 +26,22 @@ before(() => {
       .enterDOB(testdata.dob)
       .selectMobilePhone()
       .enterMobilePhone(testdata.phone_number);
-    guardianSectionExist().then((exist) => {
-      if (exist === true) {
-        welcome.selectGuardianNo();
-      }
-    });
+    if (welcome.guardianSectionExist()) {
+      welcome.selectGuardianNo();
+    }
     welcome.selectVisitedBeforeNo().agreeTerms().submitChanges();
   });
 });
 
 describe(" Testing Verification page ", () => {
+  it(" Icon ", () => {
+    welcome.validateIcon();
+  });
+
+  it(" Validate OTP fields ", () => {
+    verification.validateFields();
+  });
+
   it(" Enter wrong OTP ", () => {
     verification
       .enterOTP(testdata.otp1)
