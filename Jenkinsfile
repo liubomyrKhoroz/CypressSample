@@ -3,7 +3,7 @@ pipeline {
 
   parameters {
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: "Select the browser")
-    choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage/', 'cypress/e2e/TestWelcomePage/', 'cypress/e2e/TestDemographicsPage/', 'cypress/e2e/TestIdentificationPage', 'cypress/e2e/TestDemographicsPatientInfoPage.cy.js'], description: "Enter the test scenarios you want to run")
+    choice(name: 'TESTSUITE', choices: ['cypress/e2e/', 'cypress/e2e/TestVerificationPage.cy.js', 'cypress/e2e/TestWelcomePage.cy.js', 'cypress/e2e/TestDemographicsPage.cy.js', 'cypress/e2e/TestIdentificationPage.cy.js', 'cypress/e2e/TestDemographicsPatientInfoPage.cy.js'], description: "Enter the test scenarios you want to run")
     choice(
       choices: getDropdownChoices(),
       description: 'Select environment for test run',
