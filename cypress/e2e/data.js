@@ -83,6 +83,8 @@ export default {
     "Wrong phone number or verification code. You have 2 attempt(s) left.",
   message_insurance_required: "Insurance Provider is required",
 
+
+
   list_relationship_en: [
     "Parent",
     "Grandparent",
@@ -162,6 +164,7 @@ export const Pages = {
   Identification: "Identification",
   Insurance: "Insurance",
   Demographics: "Demographics",
+  Medications: "Medications",
 };
 
 let business = "AdviNow";
